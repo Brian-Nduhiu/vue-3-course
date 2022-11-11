@@ -48,9 +48,30 @@ titleApp.mount('title');
 
 
 const app = Vue.createApp({
-    created() {
-        this.getPosts();
+
+    data() {
+        return {
+
+
+            darkModeSet: true,
+            darkModeStyles: {
+                background: '#38383a',
+                color: 'whitesmoke'
+            },
+            base: {
+                fontFamily: 'monospace'
+            }
+        };
     },
+    methods: {
+        toggleMode() {
+            this.darkModeSet = !this.darkModeSet;
+        },
+
+    }
+});
+
+app.component('app-header', {
     data() {
         return {
             name: "Jamal",
@@ -71,27 +92,44 @@ const app = Vue.createApp({
                     url: '/contact'
                 }
             ],
-            blogs: [],
-            darkModeSet: true,
-            darkModeStyles: {
-                background: '#38383a',
-                color: 'whitesmoke'
-            },
-            base: {
-                fontFamily: 'monospace'
-            }
         };
     },
+    template: `
+    <h1>{{name}}</h1>
+        <nav>
+        <ul>
+            <li v-for="link in links"><a :href="link.url" :key="link.id">{{ link.name }}</a></li>				
+        </ul>
+        </nav >`
+});
+
+
+app.component('blog-post', {
+    created() {
+        this.getPosts();
+    },
+    data() {
+        return {
+            blogs: []
+        };
+
+    },
     methods: {
-        toggleMode() {
-            this.darkModeSet = !this.darkModeSet;
-        },
         async getPosts() {
             const response = await fetch('https://jsonplaceholder.typicode.com/posts');
             this.blogs = await response.json();
             console.log(this.blogs);
         }
     }
+    ,
+    template: `
+    <article v-for="blog in blogs" :key="blog.id">
+		<h3>{{blog.title}}</h3>
+		<p v-html="blog.body">
+		</p>
+		<p class="read_more">Read More</p>
+	</article>`
 });
+
 
 app.mount('body');
