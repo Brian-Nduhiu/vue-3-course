@@ -36,16 +36,18 @@ const blogs = [
     }
 ];
 
-Vue.createApp({
+const titleApp = Vue.createApp({
     data() {
         return {
             title: "Jamal"
         };
     }
-}).mount('title');
+});
+
+titleApp.mount('title');
 
 
-Vue.createApp({
+const app = Vue.createApp({
     created() {
         this.getPosts();
     },
@@ -90,4 +92,6 @@ Vue.createApp({
             console.log(this.blogs);
         }
     }
-}).mount('body');
+});
+
+app.mount('body');
