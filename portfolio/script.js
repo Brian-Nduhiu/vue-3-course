@@ -113,12 +113,12 @@ app.component('app-header', {
 
 
 app.component('blog-post', {
-    props: ['title', 'body'],
+    props: ['blog'],
     template: `
     <article>
-		<h3>{{title}}</h3>
+		<h3>{{blog.title}}</h3>
 		<p>
-        {{body}}
+        {{blog.body}}
 		</p>
 		<p class="read_more">Read More</p>
 	</article>`
