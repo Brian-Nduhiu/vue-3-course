@@ -48,11 +48,13 @@ titleApp.mount('title');
 
 
 const app = Vue.createApp({
-
+    created() {
+        this.getPosts();
+    },
     data() {
         return {
 
-
+            blogs: [],
             darkModeSet: true,
             darkModeStyles: {
                 background: '#38383a',
@@ -67,8 +69,14 @@ const app = Vue.createApp({
         toggleMode() {
             this.darkModeSet = !this.darkModeSet;
         },
+        async getPosts() {
+            const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+            this.blogs = await response.json();
+            console.log(this.blogs);
+        }
 
-    }
+    },
+
 });
 
 app.component('app-header', {
@@ -105,27 +113,12 @@ app.component('app-header', {
 
 
 app.component('blog-post', {
-    created() {
-        this.getPosts();
-    },
-    data() {
-        return {
-            blogs: []
-        };
-
-    },
-    methods: {
-        async getPosts() {
-            const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-            this.blogs = await response.json();
-            console.log(this.blogs);
-        }
-    }
-    ,
+    props: ['title', 'body'],
     template: `
-    <article v-for="blog in blogs" :key="blog.id">
-		<h3>{{blog.title}}</h3>
-		<p v-html="blog.body">
+    <article>
+		<h3>{{title}}</h3>
+		<p>
+        {{body}}
 		</p>
 		<p class="read_more">Read More</p>
 	</article>`

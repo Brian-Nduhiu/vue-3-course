@@ -22,7 +22,7 @@
 					<button @click="toggleMode">{{darkModeSet ? '&#9788':'&#9789'}}</button>
 					<!-- BLOG SECTION -->
 					<section id="blog">
-						<blog-post></blog-post>
+						<blog-post v-for="blog in blogs" :key="blog.id" :title="blog.title" :body="blog.body"></blog-post>
 					</section>
 				</div>
 				
