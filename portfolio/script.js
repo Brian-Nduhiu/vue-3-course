@@ -47,7 +47,57 @@ const titleApp = Vue.createApp({
 titleApp.mount('title');
 
 
+
+
+const appHeader = {
+    data() {
+        return {
+            name: "Jamal",
+            links: [
+                {
+                    id: 1,
+                    name: 'home',
+                    url: '/'
+                },
+                {
+                    id: 2,
+                    name: 'portfolio',
+                    url: '/portfolio'
+                },
+                {
+                    id: 3,
+                    name: 'contact',
+                    url: '/contact'
+                }
+            ],
+        };
+    },
+    template: `
+    <h1>{{name}}</h1>
+        <nav>
+        <ul>
+            <li v-for="link in links"><a :href="link.url" :key="link.id">{{ link.name }}</a></li>				
+        </ul>
+        </nav >`
+};
+
+const blogPost = {
+    props: ['blog'],
+    template: `
+    <article>
+		<h3>{{blog.title}}</h3>
+		<p>
+        {{blog.body}}
+		</p>
+		<p class="read_more">Read More</p>
+	</article>`
+};
+
 const app = Vue.createApp({
+    components: {
+        'app-header': appHeader,
+        'blog-post': blogPost
+    },
     created() {
         this.getPosts();
     },
@@ -78,51 +128,5 @@ const app = Vue.createApp({
     },
 
 });
-
-app.component('app-header', {
-    data() {
-        return {
-            name: "Jamal",
-            links: [
-                {
-                    id: 1,
-                    name: 'home',
-                    url: '/'
-                },
-                {
-                    id: 2,
-                    name: 'portfolio',
-                    url: '/portfolio'
-                },
-                {
-                    id: 3,
-                    name: 'contact',
-                    url: '/contact'
-                }
-            ],
-        };
-    },
-    template: `
-    <h1>{{name}}</h1>
-        <nav>
-        <ul>
-            <li v-for="link in links"><a :href="link.url" :key="link.id">{{ link.name }}</a></li>				
-        </ul>
-        </nav >`
-});
-
-
-app.component('blog-post', {
-    props: ['blog'],
-    template: `
-    <article>
-		<h3>{{blog.title}}</h3>
-		<p>
-        {{blog.body}}
-		</p>
-		<p class="read_more">Read More</p>
-	</article>`
-});
-
 
 app.mount('body');
