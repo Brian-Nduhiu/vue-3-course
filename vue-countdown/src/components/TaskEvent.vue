@@ -1,5 +1,8 @@
 <template>
-  <article :style="{background:event.background}">
+  <article :style="{
+  background:event.background,
+  color: changeContrast ? '#454444': 'whitesmoke'
+  }">
     <div class="data">
       <h3 class="name">{{event.name}}</h3>
       <p class="details">{{event.details}}</p>
@@ -16,8 +19,7 @@
         {{Math.abs(daysLeft)}}
         <br/>
         <small>
-        {{daysLeft == 1 ? 'day ' : 'days '}}  
-        {{Math.sign(daysLeft) !== -1 ? 'left' : 'ago'}} 
+         {{daysLeftString}}
       
         </small>
       </p>
@@ -28,7 +30,19 @@
 <script>
 export default {
   name:'TaskEvent',
-  props:['event','daysLeft']
+  props:['event','daysLeft'],
+  computed:{
+    daysLeftString(){
+      const dayOrDays = this.daysLeft == 1 ? 'day ' : 'days ' 
+      const leftOrAgo = Math.sign(this.daysLeft) !== -1 ? 'left' : 'ago'
+
+      return dayOrDays + leftOrAgo
+    },
+    changeContrast(){
+      const lowContrastBackgrounds = ['#f9f970','#68ee94']
+      return lowContrastBackgrounds.includes(this.event.background)
+    }
+  }
 }
 </script>
 

@@ -1,4 +1,6 @@
 <template>
+  <button @click="darkModeSet = !darkModeSet">dark mode</button>
+  <p>{{darkModeSet}}</p>
   <ul>
     <li v-for="event in events" :key="event.id">
       <Event :event="event" :daysLeft="daysLeft(event)"/>
@@ -65,19 +67,25 @@ export default {
   },
   data(){
     return{
-      events: eventData
+      events: eventData,
+      darkModeSet: false
     }
   },
   methods:{
     daysLeft(event){
       const time =  Date.parse(event.date) - Date.now() 
       const days = Math.ceil(time / (1000 * 60 * 60 * 24))
-      console.log(days);
+      // console.log(days);
       // console.log(Date.parse(event.date));
       // console.log(Date.now());
       // console.log(time);
 
       return days
+    }
+  },
+  watch: {
+    darkModeSet(val){
+      console.log(val);
     }
   }
 }
