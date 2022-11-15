@@ -1,26 +1,100 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ul>
+    <li v-for="event in events" :key="event.id">
+      <Event :event="event" :daysLeft="daysLeft(event)"/>
+    </li>
+  </ul>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+const eventData = [
+  {
+    id: 1,
+    name: "Graduation",
+    details: "wooohoo!!!",
+    date: "2023-09-25",
+    background: "#F34949",
+  },
+  {
+    id: 2,
+    name: "Holidays",
+    details: "wooohoo!!!",
+    date: "2022-11-15",
+    background: "#f9f970",
+  },
+  {
+    id: 3,
+    name: "Mashujaa Day",
+    details: "Get me outta here!",
+    date: "2022-10-20",
+    background: "#7AD3F0",
+  },
+  {
+    id: 4,
+    name: "Birthday",
+    details: "My birthday party",
+    date: "2022-12-30",
+    background: "#F07AEC",
+  },
+  {
+    id: 5,
+    name: "Christmas",
+    details: "ho ho ho",
+    date: "2022-12-25",
+    background: "#EB9A0F",
+  },
+  {
+    id: 6,
+    name: "Conference Talk",
+    details: "dont flop",
+    date: "2022-11-14",
+    background: "#68EE94",
+  },
+];
+
+
+
+import Event from './components/TaskEvent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Event
+  },
+  data(){
+    return{
+      events: eventData
+    }
+  },
+  methods:{
+    daysLeft(event){
+      const time =  Date.parse(event.date) - Date.now() 
+      const days = Math.ceil(time / (1000 * 60 * 60 * 24))
+      console.log(days);
+      // console.log(Date.parse(event.date));
+      // console.log(Date.now());
+      // console.log(time);
+
+      return days
+    }
   }
 }
 </script>
 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#app{
+  font-family: Avenir,Helvetica,Arial,sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+ul{
+  padding:0;
+}
+li{
+  list-style: none;
+  cursor: pointer;
 }
 </style>
