@@ -21,7 +21,7 @@ const eventData = [
     id: 2,
     name: "Holidays",
     details: "wooohoo!!!",
-    date: "2022-11-15",
+    date: "2022-11-16",
     background: "#f9f970",
   },
   {
@@ -49,7 +49,7 @@ const eventData = [
     id: 6,
     name: "Conference Talk",
     details: "dont flop",
-    date: "2022-11-14",
+    date: "2022-11-16",
     background: "#68EE94",
   },
 ];

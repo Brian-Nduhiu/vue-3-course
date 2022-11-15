@@ -1,5 +1,5 @@
 <template>
-  <article v-show="Math.sign(daysLeft)  !== -1" :style="{background:event.background}">
+  <article :style="{background:event.background}">
     <div class="data">
       <h3 class="name">{{event.name}}</h3>
       <p class="details">{{event.details}}</p>
@@ -11,13 +11,15 @@
         </button>
       </div>
       <p v-if="daysLeft == 0">Today</p>
-      <p v-else-if="daysLeft == 1">Tomorrow</p>
+
       <p v-else>
-        {{daysLeft}}
+        {{Math.abs(daysLeft)}}
         <br/>
         <small>
-          
-          Days Left</small>
+        {{daysLeft == 1 ? 'day ' : 'days '}}  
+        {{Math.sign(daysLeft) !== -1 ? 'left' : 'ago'}} 
+      
+        </small>
       </p>
     </div>
   </article>
