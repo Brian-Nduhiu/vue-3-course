@@ -1,9 +1,24 @@
 <template>
-  <button @click="darkModeSet = !darkModeSet">dark mode</button>
-  <p>{{darkModeSet}}</p>
+  <teleport to="#modal">
+    <form v-if="showForm">
+    <p>Add New Event</p>
+  </form>
+  </teleport>
+  
+
+
+  <div class="options">
+    <button @click="showPastEvents = !showPastEvents">{{showPastEvents ? 'Hide Past Events': 'Show Past Events'}}</button>
+    <button class="addNew" @click="showForm = !showForm">&#43;</button>
+  </div>
   <ul>
-    <li v-for="event in events" :key="event.id">
-      <Event :event="event" :daysLeft="daysLeft(event)"/>
+    <li v-for="event in orderEvents" :key="event.id">
+      <Event 
+      :event="event" 
+      :daysLeft="daysLeft(event)"
+      :showPastEvents = "showPastEvents"
+
+      />
     </li>
   </ul>
   
@@ -68,7 +83,8 @@ export default {
   data(){
     return{
       events: eventData,
-      darkModeSet: false
+      showPastEvents: false,
+      showForm : false
     }
   },
   methods:{
@@ -83,11 +99,13 @@ export default {
       return days
     }
   },
-  watch: {
-    darkModeSet(val){
-      console.log(val);
+  computed: {
+    orderEvents(){
+      const eventsToOrder = this.events
+      return eventsToOrder.sort((a,b) => a.date > b.date ? 1 : -1)
     }
   }
+  
 }
 </script>
 
